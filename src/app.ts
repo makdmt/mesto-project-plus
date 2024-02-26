@@ -1,29 +1,27 @@
-import express, { json, Router } from 'express';
+import express, { NextFunction, Request, json } from 'express';
 import mongoose from 'mongoose';
-import { createUser } from './controllers/users';
+import router from './routes/index';
 
-const {PORT = 3000} = process.env;
-
+const { PORT = 3000 } = process.env;
 
 const app = express();
+
 app.use(json());
-
-const router = Router();
-
 app.use(router);
 
+connect();
 
-app.get('/users', (req, res) => {console.log('users');
-res.send({message: 'yes'})})
-app.post('/users', createUser);
-
-const connect = async () => {
+async function connect() {
   mongoose.set('strictQuery', true);
   await mongoose.connect('mongodb://localhost:27017/mestodb');
   app.listen(PORT);
   console.log(`App listening on port ${PORT}`)
 }
 
-connect();
+function tmpMiddleware(req: Request, res: Response, next: NextFunction) {
+  req.user = {
+    _id: '65dc6a614a6607670825b436'
+  }
 
-
+  next();
+}

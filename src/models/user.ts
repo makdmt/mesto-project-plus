@@ -9,7 +9,7 @@ interface IUser {
 const userSchema = new mongoose.Schema<IUser>({
   name: {
     type: String,
-    required: true,
+    required: [true, 'name is required'],
     minlength: 2,
     maxlength: 30,
   },
@@ -23,6 +23,6 @@ const userSchema = new mongoose.Schema<IUser>({
     type: String,
     required: true,
   }
-})
+}, { versionKey: false })
 
 export default mongoose.model<IUser>('user', userSchema);
