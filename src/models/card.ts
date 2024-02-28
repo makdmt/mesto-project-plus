@@ -1,4 +1,5 @@
 import mongoose, { ObjectId } from "mongoose";
+import { celebrate, Joi } from "celebrate";
 
 interface ICard {
   name: string,
@@ -7,6 +8,10 @@ interface ICard {
   likes: ObjectId[],
   createdAt: Date
 }
+
+const nameValidator = Joi.string().required().min(2).max(30);
+console.log(Joi.isError(nameValidator.validate('sdd').error));
+// console.log(nameValidator.validate(undefined).error);
 
 const cardSchema = new mongoose.Schema<ICard>({
   name: {
