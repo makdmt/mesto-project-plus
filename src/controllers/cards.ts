@@ -22,3 +22,19 @@ export const deleteCard = (req: Request, res: Response) => {
     .then(card => res.status(STATUS_CODES.OK.statusCode).send(STATUS_CODES.OK.message))
     .catch(err => res.status(STATUS_CODES.INTERNAL_SERVER_ERROR.statusCode).send(STATUS_CODES.INTERNAL_SERVER_ERROR.message))
 }
+
+export const likeCard = (req: Request, res: Response) => {
+  const { cardId } = req.params;
+  const { _id: userId } = req.user;
+  return Cards.findByIdAndUpdate({ _id: cardId }, { $addToSet: { likes: userId } }, { new: true })
+    .then(card => res.status(STATUS_CODES.OK.statusCode).send(STATUS_CODES.OK.message))
+    .catch(err => res.status(STATUS_CODES.INTERNAL_SERVER_ERROR.statusCode).send(STATUS_CODES.INTERNAL_SERVER_ERROR.message))
+}
+
+export const dislikeCard = (req: Request, res: Response) => {
+  const { cardId } = req.params;
+  const { _id: userId } = req.user;
+  return Cards.findByIdAndUpdate({ _id: cardId }, { $pull: { likes: userId } }, { new: true })
+    .then(card => res.status(STATUS_CODES.OK.statusCode).send(STATUS_CODES.OK.message))
+    .catch(err => res.status(STATUS_CODES.INTERNAL_SERVER_ERROR.statusCode).send(STATUS_CODES.INTERNAL_SERVER_ERROR.message))
+}
