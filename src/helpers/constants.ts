@@ -1,58 +1,226 @@
 export const STATUS_CODES = {
-  '100': 'Continue',
-  '101': 'Switching Protocols',
-  '102': 'Processing',
-  '200': 'OK',
-  '201': 'Created',
-  '202': 'Accepted',
-  '203': 'Non-Authoritative Information',
-  '204': 'No Content',
-  '205': 'Reset Content',
-  '206': 'Partial Content',
-  '207': 'Multi-Status',
-  '300': 'Multiple Choices',
-  '301': 'Moved Permanently',
-  '302': 'Moved Temporarily',
-  '303': 'See Other',
-  '304': 'Not Modified',
-  '305': 'Use Proxy',
-  '307': 'Temporary Redirect',
-  '400': 'Bad Request',
-  '401': 'Unauthorized',
-  '402': 'Payment Required',
-  '403': 'Forbidden',
-  '404': 'Not Found',
-  '405': 'Method Not Allowed',
-  '406': 'Not Acceptable',
-  '407': 'Proxy Authentication Required',
-  '408': 'Request Time-out',
-  '409': 'Conflict',
-  '410': 'Gone',
-  '411': 'Length Required',
-  '412': 'Precondition Failed',
-  '413': 'Request Entity Too Large',
-  '414': 'Request-URI Too Large',
-  '415': 'Unsupported Media Type',
-  '416': 'Requested Range Not Satisfiable',
-  '417': 'Expectation Failed',
-  '418': 'I\'m a teapot',
-  '422': 'Unprocessable Entity',
-  '423': 'Locked',
-  '424': 'Failed Dependency',
-  '425': 'Unordered Collection',
-  '426': 'Upgrade Required',
-  '428': 'Precondition Required',
-  '429': 'Too Many Requests',
-  '431': 'Request Header Fields Too Large',
-  '500': 'Internal Server Error',
-  '501': 'Not Implemented',
-  '502': 'Bad Gateway',
-  '503': 'Service Unavailable',
-  '504': 'Gateway Time-out',
-  '505': 'HTTP Version Not Supported',
-  '506': 'Variant Also Negotiates',
-  '507': 'Insufficient Storage',
-  '509': 'Bandwidth Limit Exceeded',
-  '510': 'Not Extended',
-  '511': 'Network Authentication Required'
-};
+	"CONTINUE": {
+		"statusCode": 100,
+		"message": "Continue"
+	},
+	"SWITCHING_PROTOCOLS": {
+		"statusCode": 101,
+		"message": "Switching Protocols"
+	},
+	"PROCESSING": {
+		"statusCode": 102,
+		"message": "Processing"
+	},
+	"OK": {
+		"statusCode": 200,
+		"message": "OK"
+	},
+	"CREATED": {
+		"statusCode": 201,
+		"message": "Created"
+	},
+	"ACCEPTED": {
+		"statusCode": 202,
+		"message": "Accepted"
+	},
+	"NON_AUTHORITATIVE_INFORMATION": {
+		"statusCode": 203,
+		"message": "Non-Authoritative Information"
+	},
+	"NO_CONTENT": {
+		"statusCode": 204,
+		"message": "No Content"
+	},
+	"RESET_CONTENT": {
+		"statusCode": 205,
+		"message": "Reset Content"
+	},
+	"PARTIAL_CONTENT": {
+		"statusCode": 206,
+		"message": "Partial Content"
+	},
+	"MULTI_STATUS": {
+		"statusCode": 207,
+		"message": "Multi-Status"
+	},
+	"MULTIPLE_CHOICES": {
+		"statusCode": 300,
+		"message": "Multiple Choices"
+	},
+	"MOVED_PERMANENTLY": {
+		"statusCode": 301,
+		"message": "Moved Permanently"
+	},
+	"MOVED_TEMPORARILY": {
+		"statusCode": 302,
+		"message": "Moved Temporarily"
+	},
+	"SEE_OTHER": {
+		"statusCode": 303,
+		"message": "See Other"
+	},
+	"NOT_MODIFIED": {
+		"statusCode": 304,
+		"message": "Not Modified"
+	},
+	"USE_PROXY": {
+		"statusCode": 305,
+		"message": "Use Proxy"
+	},
+	"TEMPORARY_REDIRECT": {
+		"statusCode": 307,
+		"message": "Temporary Redirect"
+	},
+	"BAD_REQUEST": {
+		"statusCode": 400,
+		"message": "Bad Request"
+	},
+	"UNAUTHORIZED": {
+		"statusCode": 401,
+		"message": "Unauthorized"
+	},
+	"PAYMENT_REQUIRED": {
+		"statusCode": 402,
+		"message": "Payment Required"
+	},
+	"FORBIDDEN": {
+		"statusCode": 403,
+		"message": "Forbidden"
+	},
+	"NOT_FOUND": {
+		"statusCode": 404,
+		"message": "Not Found"
+	},
+	"METHOD_NOT_ALLOWED": {
+		"statusCode": 405,
+		"message": "Method Not Allowed"
+	},
+	"NOT_ACCEPTABLE": {
+		"statusCode": 406,
+		"message": "Not Acceptable"
+	},
+	"PROXY_AUTHENTICATION_REQUIRED": {
+		"statusCode": 407,
+		"message": "Proxy Authentication Required"
+	},
+	"REQUEST_TIME_OUT": {
+		"statusCode": 408,
+		"message": "Request Time-out"
+	},
+	"CONFLICT": {
+		"statusCode": 409,
+		"message": "Conflict"
+	},
+	"GONE": {
+		"statusCode": 410,
+		"message": "Gone"
+	},
+	"LENGTH_REQUIRED": {
+		"statusCode": 411,
+		"message": "Length Required"
+	},
+	"PRECONDITION_FAILED": {
+		"statusCode": 412,
+		"message": "Precondition Failed"
+	},
+	"REQUEST_ENTITY_TOO_LARGE": {
+		"statusCode": 413,
+		"message": "Request Entity Too Large"
+	},
+	"REQUEST_URI_TOO_LARGE": {
+		"statusCode": 414,
+		"message": "Request-URI Too Large"
+	},
+	"UNSUPPORTED_MEDIA_TYPE": {
+		"statusCode": 415,
+		"message": "Unsupported Media Type"
+	},
+	"REQUESTED_RANGE_NOT_SATISFIABLE": {
+		"statusCode": 416,
+		"message": "Requested Range Not Satisfiable"
+	},
+	"EXPECTATION_FAILED": {
+		"statusCode": 417,
+		"message": "Expectation Failed"
+	},
+	"I'M_A_TEAPOT": {
+		"statusCode": 418,
+		"message": "I'm a teapot"
+	},
+	"UNPROCESSABLE_ENTITY": {
+		"statusCode": 422,
+		"message": "Unprocessable Entity"
+	},
+	"LOCKED": {
+		"statusCode": 423,
+		"message": "Locked"
+	},
+	"FAILED_DEPENDENCY": {
+		"statusCode": 424,
+		"message": "Failed Dependency"
+	},
+	"UNORDERED_COLLECTION": {
+		"statusCode": 425,
+		"message": "Unordered Collection"
+	},
+	"UPGRADE_REQUIRED": {
+		"statusCode": 426,
+		"message": "Upgrade Required"
+	},
+	"PRECONDITION_REQUIRED": {
+		"statusCode": 428,
+		"message": "Precondition Required"
+	},
+	"TOO_MANY_REQUESTS": {
+		"statusCode": 429,
+		"message": "Too Many Requests"
+	},
+	"REQUEST_HEADER_FIELDS_TOO_LARGE": {
+		"statusCode": 431,
+		"message": "Request Header Fields Too Large"
+	},
+	"INTERNAL_SERVER_ERROR": {
+		"statusCode": 500,
+		"message": "Internal Server Error"
+	},
+	"NOT_IMPLEMENTED": {
+		"statusCode": 501,
+		"message": "Not Implemented"
+	},
+	"BAD_GATEWAY": {
+		"statusCode": 502,
+		"message": "Bad Gateway"
+	},
+	"SERVICE_UNAVAILABLE": {
+		"statusCode": 503,
+		"message": "Service Unavailable"
+	},
+	"GATEWAY_TIME_OUT": {
+		"statusCode": 504,
+		"message": "Gateway Time-out"
+	},
+	"HTTP_VERSION_NOT_SUPPORTED": {
+		"statusCode": 505,
+		"message": "HTTP Version Not Supported"
+	},
+	"VARIANT_ALSO_NEGOTIATES": {
+		"statusCode": 506,
+		"message": "Variant Also Negotiates"
+	},
+	"INSUFFICIENT_STORAGE": {
+		"statusCode": 507,
+		"message": "Insufficient Storage"
+	},
+	"BANDWIDTH_LIMIT_EXCEEDED": {
+		"statusCode": 509,
+		"message": "Bandwidth Limit Exceeded"
+	},
+	"NOT_EXTENDED": {
+		"statusCode": 510,
+		"message": "Not Extended"
+	},
+	"NETWORK_AUTHENTICATION_REQUIRED": {
+		"statusCode": 511,
+		"message": "Network Authentication Required"
+	}
+}
