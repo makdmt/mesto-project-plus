@@ -1,7 +1,6 @@
 import express, { NextFunction, Request, Response, json } from 'express';
 import mongoose from 'mongoose';
 import router from './routes/index';
-import fs from 'fs'
 
 const { PORT = 3000 } = process.env;
 
@@ -27,5 +26,3 @@ function fakeAuthMiddleware (req: Request, res: Response, next: NextFunction) {
 
   next();
 }
-
-
