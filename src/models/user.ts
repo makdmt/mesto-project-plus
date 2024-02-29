@@ -1,4 +1,8 @@
 import mongoose from "mongoose";
+import { userNameValidation } from "../validators/user";
+
+console.log(userNameValidation.schema.validate('434'))
+
 
 interface IUser {
   name: string,
