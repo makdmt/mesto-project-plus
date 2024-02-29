@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import User from '../models/user';
-import { STATUS_CODES } from '../helpers/constants';
+import { STATUS_CODES } from '../errors/status-codes';
 
 export const getUsers = (req: Request, res: Response) => {
   return User.find({})
