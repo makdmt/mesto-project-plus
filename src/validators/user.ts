@@ -1,29 +1,54 @@
 import { Joi } from "celebrate";
 
-export const userNameValidation = {
-  schema: Joi.string().required().min(2).max(30),
-  message: 'Username must be string from 2 to 30 long'
+// interface IValidation {
+//   schemaJoi: Joi.Schema,
+//   errMessage: string
+// }
+
+// interface ILongedString extends IValidation {
+//   required: boolean,
+//   minLength: number,
+//   maxLength: number
+// }
+
+class Validation {
+  constructor(
+    public errMessage: string,
+    public schemaJoi: Joi.Schema
+    ) {}
 }
 
-// export default nameValidation
+class LongedStringValidation extends Validation {
+  public required: true;
+  constructor(
+    public minLength: number,
+    public maxLength: number,
+    public errMessage: string) {
+    super(errMessage, Joi.string().required().min(minLength).max(maxLength));
+    this.required = true;
+  }
+}
+
+export const userNameValidation = new LongedStringValidation(
+  2,
+  30,
+  'field "name" is required and must be string from 2 to 30 long'
+);
 
 
+export const userAboutValidation = new LongedStringValidation (
+  2,
+  200,
+  'field "about" is required and must be string from 2 to 200 long'
+)
 
-// const userSchema = new mongoose.Schema<IUser>({
-//   name: {
-//     type: String,
-//     required: [true, 'name is required'],
-//     minlength: 2,
-//     maxlength: 30,
-//   },
-//   about: {
-//     type: String,
-//     required: true,
-//     minlength: 2,
-//     maxlength: 200,
-//   },
-//   avatar: {
-//     type: String,
-//     required: true,
-//   }
-// }, { versionKey: false })
+export const userAvatarValidation = new Validation (
+  'field "avatar" is required and must be URL',
+  Joi.string().required().uri()
+)
+
+export const userValidator = Joi.object({
+  name: userNameValidation.schemaJoi,
+  about: userAboutValidation.schemaJoi,
+  avatar: userAvatarValidation.schemaJoi
+})

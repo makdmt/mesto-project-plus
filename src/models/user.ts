@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
-import { userNameValidation } from "../validators/user";
-
-console.log(userNameValidation.schema.validate('434'))
+import { Joi } from "celebrate";
+import { userAboutValidation, userAvatarValidation, userNameValidation } from "../validators/user";
 
 
 interface IUser {
@@ -13,19 +12,23 @@ interface IUser {
 const userSchema = new mongoose.Schema<IUser>({
   name: {
     type: String,
-    required: [true, 'name is required'],
-    minlength: 2,
-    maxlength: 30,
+    required: [userNameValidation.required, userNameValidation.errMessage],
+    minlength: userNameValidation.minLength,
+    maxlength: userNameValidation.maxLength,
   },
   about: {
     type: String,
-    required: true,
-    minlength: 2,
-    maxlength: 200,
+    required: [userAboutValidation.required, userAboutValidation.errMessage],
+    minlength: userAboutValidation.minLength,
+    maxlength: userAboutValidation.maxLength,
   },
   avatar: {
     type: String,
     required: true,
+    validate: {
+      validator: (val: string) => !Joi.isError(userAvatarValidation.schemaJoi.validate(val).error),
+      message: userAvatarValidation.errMessage
+    }
   }
 }, { versionKey: false })
 
