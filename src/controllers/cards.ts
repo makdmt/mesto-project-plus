@@ -1,6 +1,6 @@
 import Cards from '../models/card'
 import { Request, Response } from "express";
-import { STATUS_CODES } from '../errors/status-codes'
+import { STATUS_CODES } from '../middlewares/errors/status-codes'
 
 
 export const getCards = (req: Request, res: Response) => {

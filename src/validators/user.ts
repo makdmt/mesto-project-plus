@@ -1,21 +1,14 @@
 import { Joi } from "celebrate";
 
-// interface IValidation {
-//   schemaJoi: Joi.Schema,
-//   errMessage: string
-// }
-
-// interface ILongedString extends IValidation {
-//   required: boolean,
-//   minLength: number,
-//   maxLength: number
-// }
-
 class Validation {
+  public validator: (param: string | number) => boolean;
+
   constructor(
     public errMessage: string,
-    public schemaJoi: Joi.Schema
-    ) {}
+    public schemaJoi: Joi.Schema,
+  ) {
+    this.validator = (val) => !Joi.isError(schemaJoi.validate(val).error)
+  }
 }
 
 class LongedStringValidation extends Validation {
@@ -36,13 +29,13 @@ export const userNameValidation = new LongedStringValidation(
 );
 
 
-export const userAboutValidation = new LongedStringValidation (
+export const userAboutValidation = new LongedStringValidation(
   2,
   200,
   'about is required and must be string from 2 to 200 long'
 )
 
-export const userAvatarValidation = new Validation (
+export const userAvatarValidation = new Validation(
   'avatar is required and must be URL',
   Joi.string().required().uri()
 )

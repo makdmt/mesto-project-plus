@@ -1,7 +1,7 @@
 import express, { NextFunction, Request, Response, json } from 'express';
 import mongoose from 'mongoose';
 import router from './routes/index';
-import { errHandleMiddleware } from './middlewares/error';
+import { errHandleMiddleware } from './middlewares/errors/errors-middleware';
 
 const { PORT = 3000 } = process.env;
 

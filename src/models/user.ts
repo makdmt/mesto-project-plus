@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import { Joi } from "celebrate";
 import { userAboutValidation, userAvatarValidation, userNameValidation } from "../validators/user";
 
 
@@ -26,7 +25,7 @@ const userSchema = new mongoose.Schema<IUser>({
     type: String,
     required: true,
     validate: {
-      validator: (val: string) => !Joi.isError(userAvatarValidation.schemaJoi.validate(val).error),
+      validator: userAvatarValidation.validator,
       message: userAvatarValidation.errMessage
     }
   }
