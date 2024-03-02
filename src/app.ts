@@ -1,6 +1,7 @@
 import express, { NextFunction, Request, Response, json } from 'express';
 import mongoose from 'mongoose';
 import router from './routes/index';
+import { errHandleMiddleware } from './middlewares/error';
 
 const { PORT = 3000 } = process.env;
 
@@ -9,6 +10,7 @@ const app = express();
 app.use(json());
 app.use(fakeAuthMiddleware);
 app.use(router);
+app.use(errHandleMiddleware);
 
 connect();
 
@@ -19,10 +21,7 @@ async function connect() {
   console.log(`App listening on port ${PORT}`)
 }
 
-function fakeAuthMiddleware (req: Request, res: Response, next: NextFunction) {
-  req.user = {
-    _id: '65dc6a614a6607670825b436'
-  }
-
+function fakeAuthMiddleware(req: Request, res: Response, next: NextFunction) {
+  req.user = { _id: '65e35009acbdd707fc26e6d7' }
   next();
 }

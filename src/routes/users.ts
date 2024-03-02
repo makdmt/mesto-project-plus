@@ -3,8 +3,8 @@ import { getUsers, getUserById, createUser, patchUserAvatar, patchUser } from ".
 
 const userRouter = Router();
 
-userRouter.get('/', getUsers);
 userRouter.get('/:id', getUserById);
+userRouter.get('/', getUsers);
 userRouter.post('/', createUser);
 userRouter.patch('/me/avatar', patchUserAvatar);
 userRouter.patch('/me', patchUser);

@@ -32,18 +32,18 @@ class LongedStringValidation extends Validation {
 export const userNameValidation = new LongedStringValidation(
   2,
   30,
-  'field "name" is required and must be string from 2 to 30 long'
+  'name is required and must be string from 2 to 30 long'
 );
 
 
 export const userAboutValidation = new LongedStringValidation (
   2,
   200,
-  'field "about" is required and must be string from 2 to 200 long'
+  'about is required and must be string from 2 to 200 long'
 )
 
 export const userAvatarValidation = new Validation (
-  'field "avatar" is required and must be URL',
+  'avatar is required and must be URL',
   Joi.string().required().uri()
 )
 
