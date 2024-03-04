@@ -1,8 +1,9 @@
-import { STATUS_CODES } from "./status-codes";
+import { STATUS_CODES } from './status-codes';
 
 export class CustomError extends Error {
   constructor(public statusCode: number, message: string) {
-    super(message)
+    super(message);
+    this.statusCode = statusCode;
   }
 }
 
