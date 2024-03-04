@@ -26,9 +26,9 @@ const userSchema = new mongoose.Schema<IUser>({
     required: true,
     validate: {
       validator: userAvatarValidation.validator,
-      message: userAvatarValidation.errMessage
-    }
-  }
-}, { versionKey: false })
+      message: userAvatarValidation.errMessage,
+    },
+  },
+}, { versionKey: false });
 
 export default mongoose.model<IUser>('user', userSchema);

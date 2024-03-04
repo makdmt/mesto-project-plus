@@ -1,5 +1,5 @@
-import mongoose, { ObjectId } from "mongoose";
-import { celebrate, Joi } from "celebrate";
+import mongoose, { ObjectId } from 'mongoose';
+import { cardLinkValidation, cardNameValidation } from '../validators/cards';
 
 interface ICard {
   name: string,
@@ -12,13 +12,17 @@ interface ICard {
 const cardSchema = new mongoose.Schema<ICard>({
   name: {
     type: String,
-    minlength: 2,
-    maxlength: 30,
-    required: true,
+    validate: {
+      validator: cardNameValidation.validator,
+      message: cardNameValidation.errMessage,
+    },
   },
   link: {
     type: String,
-    required: true
+    validate: {
+      validator: cardLinkValidation.validator,
+      message: cardLinkValidation.errMessage,
+    },
   },
   owner: {
     type: mongoose.Types.ObjectId,
@@ -26,12 +30,12 @@ const cardSchema = new mongoose.Schema<ICard>({
   },
   likes: {
     type: [mongoose.Types.ObjectId],
-    default: []
+    default: [],
   },
   createdAt: {
     type: Date,
-    default: Date.now
-  }
-})
+    default: Date.now,
+  },
+}, { versionKey: false });
 
 export default mongoose.model<ICard>('card', cardSchema);
