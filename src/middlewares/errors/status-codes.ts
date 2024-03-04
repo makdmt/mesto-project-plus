@@ -1,3 +1,4 @@
+/* eslint-disable */
 export const STATUS_CODES = {
 	"CONTINUE": {
 		"statusCode": 100,
@@ -224,3 +225,5 @@ export const STATUS_CODES = {
 		"message": "Network Authentication Required"
 	}
 }
+
+/* eslint-disable */

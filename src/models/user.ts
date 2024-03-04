@@ -1,6 +1,5 @@
-import mongoose from "mongoose";
-import { userAboutValidation, userAvatarValidation, userNameValidation } from "../validators/user";
-
+import mongoose from 'mongoose';
+import { userAboutValidation, userAvatarValidation, userNameValidation } from '../validators/user';
 
 interface IUser {
   name: string,

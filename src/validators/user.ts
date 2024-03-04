@@ -33,7 +33,7 @@ export const userNameValidation = new LongedStringValidation(
 export const userAboutValidation = new LongedStringValidation(
   2,
   200,
-  'about is required and must be string from 2 to 200 long'
+  'about is required and must be string from 2 to 200 long',
 );
 
 export const userAvatarValidation = new Validation(
