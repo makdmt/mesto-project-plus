@@ -182,7 +182,7 @@ export const STATUS_CODES = {
 	},
 	"INTERNAL_SERVER_ERROR": {
 		"statusCode": 500,
-		"message": "Internal Server Error"
+		"message": "На сервере произошла ошибка"
 	},
 	"NOT_IMPLEMENTED": {
 		"statusCode": 501,
