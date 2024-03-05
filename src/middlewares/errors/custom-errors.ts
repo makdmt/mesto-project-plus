@@ -25,6 +25,12 @@ export class ConflictError extends CustomError {
   }
 }
 
+export class UnauthorizedError extends CustomError {
+  constructor(message = STATUS_CODES.UNAUTHORIZED.message) {
+    super(STATUS_CODES.UNAUTHORIZED.statusCode, message);
+  }
+}
+
 export class InternalServerError extends CustomError {
   constructor(message = STATUS_CODES.INTERNAL_SERVER_ERROR.message) {
     super(STATUS_CODES.INTERNAL_SERVER_ERROR.statusCode, message);

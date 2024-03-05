@@ -2,9 +2,12 @@ import { NextFunction, Request, Response } from 'express';
 import bcrypt from 'bcryptjs';
 import { mongo } from 'mongoose';
 import User, { IUser } from '../models/user';
-import { ConflictError, NotFoundError } from '../middlewares/errors/custom-errors';
+import { ConflictError, NotFoundError, UnauthorizedError } from '../middlewares/errors/custom-errors';
+import jwt from 'jsonwebtoken';
 
 const USER_ALREADY_EXIST_ERR_MSG = 'user is already exist';
+const LOGIN_FAILED_ERR_MSG = 'wrong email or password';
+const { JWT_SECRET = 'dev-mode' } = process.env;
 
 export const getUsers = (req: Request, res: Response, next: NextFunction) => {
   User.find({})
@@ -39,6 +42,29 @@ export const createUser = (req: Request, res: Response, next: NextFunction) => {
       }
       next(err);
     });
+};
+
+export const login = (req: Request, res: Response, next: NextFunction) => {
+  const { email, password } = req.body;
+
+  User.findOne({ email }).select('+password').orFail(new UnauthorizedError(LOGIN_FAILED_ERR_MSG))
+    .then((user) => bcrypt.compare(password, user.password).then((matched) => {
+      if (!matched) return Promise.reject(new UnauthorizedError(LOGIN_FAILED_ERR_MSG));
+      return user;
+    }))
+    .then((user) => {
+      const token = jwt.sign(
+        { _id: user._id },
+        JWT_SECRET,
+        { expiresIn: '7d' },
+      );
+
+      res.cookie('jwt', token, {
+        maxAge: 3600000 * 24 * 7,
+        httpOnly: true,
+      }).end();
+    })
+    .catch(next);
 };
 
 export const patchUser = (req: Request, res: Response, next: NextFunction) => {

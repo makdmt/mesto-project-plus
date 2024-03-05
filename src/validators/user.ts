@@ -43,7 +43,7 @@ export const userPasswordValidation = new RequiredLongedStringValidation(
   0,
   100,
   'password is required and must be string from 0 to 100 long',
-)
+);
 
 export const userNameValidation = new LongedStringValidation(
   2,

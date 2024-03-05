@@ -5,13 +5,15 @@ import {
   createUser,
   patchUserAvatar,
   patchUser,
+  login,
 } from '../controllers/users';
 
 const userRouter = Router();
 
 userRouter.get('/:id', getUserById);
 userRouter.get('/', getUsers);
-userRouter.post('/', createUser);
+userRouter.post('/signup', createUser);
+userRouter.post('/signin', login);
 userRouter.patch('/me/avatar', patchUserAvatar);
 userRouter.patch('/me', patchUser);
 

@@ -4,12 +4,11 @@ import {
   userAvatarValidation,
   userEmailValidation,
   userNameValidation,
-  userPasswordValidation,
 } from '../validators/user';
 
 export interface IUser {
   email: string,
-  password?: string,
+  password: string,
   name: string,
   about: string,
   avatar: string
@@ -29,10 +28,6 @@ const userSchema = new mongoose.Schema<IUser>({
     type: String,
     required: true,
     select: false,
-    validate: {
-      validator: userPasswordValidation.validator,
-      message: userPasswordValidation.errMessage,
-    },
   },
   name: {
     type: String,
