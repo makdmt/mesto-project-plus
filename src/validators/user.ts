@@ -11,7 +11,7 @@ export class Validation {
   }
 }
 
-export class LongedStringValidation extends Validation {
+export class RequiredLongedStringValidation extends Validation {
   public required: true;
 
   constructor(
@@ -24,21 +24,42 @@ export class LongedStringValidation extends Validation {
   }
 }
 
+export class LongedStringValidation extends Validation {
+  constructor(
+    public minLength: number,
+    public maxLength: number,
+    public errMessage: string,
+  ) {
+    super(errMessage, Joi.string().min(minLength).max(maxLength));
+  }
+}
+
+export const userEmailValidation = new Validation(
+  'email is required',
+  Joi.string().required().email(),
+);
+
+export const userPasswordValidation = new RequiredLongedStringValidation(
+  0,
+  100,
+  'password is required and must be string from 0 to 100 long',
+)
+
 export const userNameValidation = new LongedStringValidation(
   2,
   30,
-  'name is required and must be string from 2 to 30 long',
+  'name must be string from 2 to 30 long',
 );
 
 export const userAboutValidation = new LongedStringValidation(
   2,
   200,
-  'about is required and must be string from 2 to 200 long',
+  'about must be string from 2 to 200 long',
 );
 
 export const userAvatarValidation = new Validation(
-  'avatar is required and must be URL',
-  Joi.string().required().uri(),
+  'avatar must be URL',
+  Joi.string().uri(),
 );
 
 export const userValidator = Joi.object({

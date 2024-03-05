@@ -19,6 +19,12 @@ export class BadRequestError extends CustomError {
   }
 }
 
+export class ConflictError extends CustomError {
+  constructor(message = STATUS_CODES.CONFLICT.message) {
+    super(STATUS_CODES.CONFLICT.statusCode, message);
+  }
+}
+
 export class InternalServerError extends CustomError {
   constructor(message = STATUS_CODES.INTERNAL_SERVER_ERROR.message) {
     super(STATUS_CODES.INTERNAL_SERVER_ERROR.statusCode, message);

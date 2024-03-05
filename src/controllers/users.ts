@@ -1,6 +1,10 @@
 import { NextFunction, Request, Response } from 'express';
-import User from '../models/user';
-import { NotFoundError } from '../middlewares/errors/custom-errors';
+import bcrypt from 'bcryptjs';
+import { mongo } from 'mongoose';
+import User, { IUser } from '../models/user';
+import { ConflictError, NotFoundError } from '../middlewares/errors/custom-errors';
+
+const USER_ALREADY_EXIST_ERR_MSG = 'user is already exist';
 
 export const getUsers = (req: Request, res: Response, next: NextFunction) => {
   User.find({})
@@ -16,13 +20,25 @@ export const getUserById = (req: Request, res: Response, next: NextFunction) => 
 };
 
 export const createUser = (req: Request, res: Response, next: NextFunction) => {
-  User.create({
-    name: req.body.name,
-    about: req.body.about,
-    avatar: req.body.avatar,
-  })
-    .then((user) => res.send(user))
-    .catch(next);
+  const {
+    email, password, name, about, avatar,
+  } = req.body;
+
+  bcrypt.hash(password, 10)
+    .then((hash: string) => User.create({
+      email,
+      password: hash,
+      name,
+      about,
+      avatar,
+    }))
+    .then((user: IUser) => res.send(user))
+    .catch((err: unknown) => {
+      if (err instanceof mongo.MongoError) {
+        if (err.code === 11000) next(new ConflictError(USER_ALREADY_EXIST_ERR_MSG));
+      }
+      next(err);
+    });
 };
 
 export const patchUser = (req: Request, res: Response, next: NextFunction) => {
