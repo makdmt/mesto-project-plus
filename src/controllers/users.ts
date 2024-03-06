@@ -1,13 +1,13 @@
 import { NextFunction, Request, Response } from 'express';
 import bcrypt from 'bcryptjs';
 import { mongo } from 'mongoose';
+import jwt from 'jsonwebtoken';
 import User, { IUser } from '../models/user';
 import { ConflictError, NotFoundError, UnauthorizedError } from '../middlewares/errors/custom-errors';
-import jwt from 'jsonwebtoken';
 
 const USER_ALREADY_EXIST_ERR_MSG = 'user is already exist';
 const LOGIN_FAILED_ERR_MSG = 'wrong email or password';
-const { JWT_SECRET = 'dev-mode' } = process.env;
+export const { JWT_SECRET = 'dev-mode' } = process.env;
 
 export const getUsers = (req: Request, res: Response, next: NextFunction) => {
   User.find({})
