@@ -3,7 +3,7 @@ import bcrypt from 'bcryptjs';
 import { mongo } from 'mongoose';
 import jwt from 'jsonwebtoken';
 import User, { IUser } from '../models/user';
-import { ConflictError, NotFoundError, UnauthorizedError } from '../middlewares/errors/custom-errors';
+import { AuthorizationError, ConflictError, NotFoundError } from '../middlewares/errors/custom-errors';
 
 const USER_ALREADY_EXIST_ERR_MSG = 'user is already exist';
 const LOGIN_FAILED_ERR_MSG = 'wrong email or password';
@@ -47,9 +47,9 @@ export const createUser = (req: Request, res: Response, next: NextFunction) => {
 export const login = (req: Request, res: Response, next: NextFunction) => {
   const { email, password } = req.body;
 
-  User.findOne({ email }).select('+password').orFail(new UnauthorizedError(LOGIN_FAILED_ERR_MSG))
+  User.findOne({ email }).select('+password').orFail(new AuthorizationError(LOGIN_FAILED_ERR_MSG))
     .then((user) => bcrypt.compare(password, user.password).then((matched) => {
-      if (!matched) return Promise.reject(new UnauthorizedError(LOGIN_FAILED_ERR_MSG));
+      if (!matched) return Promise.reject(new AuthorizationError(LOGIN_FAILED_ERR_MSG));
       return user;
     }))
     .then((user) => {
@@ -64,6 +64,13 @@ export const login = (req: Request, res: Response, next: NextFunction) => {
         httpOnly: true,
       }).end();
     })
+    .catch(next);
+};
+
+export const getLoginedUser = (req: Request, res: Response, next: NextFunction) => {
+  const { _id } = req.user;
+  return User.find({ _id }).orFail(new AuthorizationError())
+    .then((user) => res.send(user))
     .catch(next);
 };
 

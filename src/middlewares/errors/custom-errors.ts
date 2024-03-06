@@ -25,7 +25,7 @@ export class ConflictError extends CustomError {
   }
 }
 
-export class UnauthorizedError extends CustomError {
+export class AuthorizationError extends CustomError {
   constructor(message = STATUS_CODES.UNAUTHORIZED.message) {
     super(STATUS_CODES.UNAUTHORIZED.statusCode, message);
   }
