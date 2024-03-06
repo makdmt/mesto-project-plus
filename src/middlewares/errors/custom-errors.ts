@@ -31,6 +31,12 @@ export class AuthorizationError extends CustomError {
   }
 }
 
+export class ForbiddenError extends CustomError {
+  constructor(message = STATUS_CODES.FORBIDDEN.message) {
+    super(STATUS_CODES.FORBIDDEN.statusCode, message);
+  }
+}
+
 export class InternalServerError extends CustomError {
   constructor(message = STATUS_CODES.INTERNAL_SERVER_ERROR.message) {
     super(STATUS_CODES.INTERNAL_SERVER_ERROR.statusCode, message);

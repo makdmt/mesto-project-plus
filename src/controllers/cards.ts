@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import Cards from '../models/card';
 import { STATUS_CODES } from '../middlewares/errors/status-codes';
-import { NotFoundError } from '../middlewares/errors/custom-errors';
+import { ForbiddenError, NotFoundError } from '../middlewares/errors/custom-errors';
 
 export default (req: Request, res: Response, next: NextFunction) => {
   Cards.find({})
@@ -18,8 +18,13 @@ export const createCard = (req: Request, res: Response, next: NextFunction) => {
 
 export const deleteCard = (req: Request, res: Response, next: NextFunction) => {
   const { cardId } = req.params;
-  return Cards.findByIdAndDelete({ _id: cardId }).orFail(new NotFoundError())
-    .then(() => res.send(STATUS_CODES.OK.message))
+  const { _id: userId } = req.user;
+  return Cards.findById({ _id: cardId }).orFail(new NotFoundError())
+    .then((card) => {
+      if (String(card.owner) !== userId) return Promise.reject(new ForbiddenError());
+      return card.deleteOne()
+        .then(() => res.send(STATUS_CODES.OK.message));
+    })
     .catch(next);
 };
 

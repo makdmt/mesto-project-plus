@@ -10,6 +10,7 @@ const errHandleMiddleware = (
   next: NextFunction,
 ) => {
   let { statusCode, message } = err;
+  console.log(err)
 
   if (err instanceof mongoose.Error.ValidationError) {
     statusCode = STATUS_CODES.BAD_REQUEST.statusCode;

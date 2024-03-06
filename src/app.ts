@@ -17,13 +17,7 @@ async function connect() {
   console.log(`App listening on port ${PORT}`); // eslint-disable-line
 }
 
-function fakeAuthMiddleware(req: Request, res: Response, next: NextFunction) {
-  req.user = { _id: '65e35009acbdd707fc26e6d7' };
-  next();
-}
-
 app.use(json());
-app.use(fakeAuthMiddleware);
 app.use(router);
 app.use(errHandleMiddleware);
 
