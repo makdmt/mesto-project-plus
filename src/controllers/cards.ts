@@ -1,7 +1,8 @@
 import { NextFunction, Request, Response } from 'express';
 import Cards from '../models/card';
-import { STATUS_CODES } from '../middlewares/errors/status-codes';
 import { ForbiddenError, NotFoundError } from '../middlewares/errors/custom-errors';
+
+const CARD_DELETED_MSG = 'card was successfully deleted';
 
 export default (req: Request, res: Response, next: NextFunction) => {
   Cards.find({})
@@ -23,7 +24,7 @@ export const deleteCard = (req: Request, res: Response, next: NextFunction) => {
     .then((card) => {
       if (String(card.owner) !== userId) return Promise.reject(new ForbiddenError());
       return card.deleteOne()
-        .then(() => res.send(STATUS_CODES.OK.message));
+        .then(() => res.send({ message: CARD_DELETED_MSG }));
     })
     .catch(next);
 };

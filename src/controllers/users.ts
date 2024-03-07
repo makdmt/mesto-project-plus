@@ -35,7 +35,14 @@ export const createUser = (req: Request, res: Response, next: NextFunction) => {
       about,
       avatar,
     }))
-    .then((user: IUser) => res.send(user))
+    .then((user: IUser) => res.send(
+      {
+        name: user.name,
+        email: user.email,
+        about: user.about,
+        avatar: user.avatar,
+      },
+    ))
     .catch((err: unknown) => {
       if (err instanceof mongo.MongoError) {
         if (err.code === 11000) next(new ConflictError(USER_ALREADY_EXIST_ERR_MSG));
