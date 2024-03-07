@@ -1,15 +1,20 @@
-import { Request, Response, Router } from 'express';
+import {
+  NextFunction,
+  Request,
+  Response,
+  Router,
+} from 'express';
+import authRouter from './auth';
 import userRouter from './users';
 import cardsRouter from './cards';
-import { STATUS_CODES } from '../middlewares/errors/status-codes';
 import auth from '../middlewares/auth';
+import { NotFoundError } from '../middlewares/errors/custom-errors';
 
 const router = Router();
-router.use('/users', userRouter);
+router.use('/', authRouter);
 router.use(auth);
+router.use('/users', userRouter);
 router.use('/cards', cardsRouter);
-router.use('*', (req: Request, res: Response) => {
-  res.status(STATUS_CODES.NOT_FOUND.statusCode).send({ message: STATUS_CODES.NOT_FOUND.message });
-});
+router.use('*', (req: Request, res: Response, next: NextFunction) => next(new NotFoundError()));
 
 export default router;

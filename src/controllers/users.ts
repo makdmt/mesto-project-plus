@@ -54,6 +54,8 @@ export const createUser = (req: Request, res: Response, next: NextFunction) => {
 export const login = (req: Request, res: Response, next: NextFunction) => {
   const { email, password } = req.body;
 
+  console.log(email)
+
   User.findOne({ email }).select('+password').orFail(new AuthorizationError(LOGIN_FAILED_ERR_MSG))
     .then((user) => bcrypt.compare(password, user.password).then((matched) => {
       if (!matched) return Promise.reject(new AuthorizationError(LOGIN_FAILED_ERR_MSG));

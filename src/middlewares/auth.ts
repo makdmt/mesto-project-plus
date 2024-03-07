@@ -7,7 +7,6 @@ const AUTHORIZATION_REQUIRED_ERR_MSG = 'authorization required';
 const TOKEN_FAILED_ERR_MSG = 'token failed';
 
 export default (req: Request, res: Response, next: NextFunction) => {
-  console.log(`Bearer ${req.cookies.jwt}`);
   const { authorization = `Bearer ${req.cookies.jwt}` } = req.headers;
   let payload: JwtPayload | string = {};
   if (!authorization || !authorization.startsWith('Bearer ') || authorization === 'Bearer undefined') throw new AuthorizationError(AUTHORIZATION_REQUIRED_ERR_MSG);

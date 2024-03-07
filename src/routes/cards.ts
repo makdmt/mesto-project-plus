@@ -9,10 +9,10 @@ import getCards, {
 
 const cardsRouter = Router();
 
-cardsRouter.get('/', getCards);
-cardsRouter.post('/', createCard);
-cardsRouter.delete('/:id', mongoObjIdInQueryValidator, deleteCard);
 cardsRouter.put('/:id/likes', mongoObjIdInQueryValidator, likeCard);
 cardsRouter.delete('/:id/likes', mongoObjIdInQueryValidator, dislikeCard);
+cardsRouter.delete('/:id', mongoObjIdInQueryValidator, deleteCard);
+cardsRouter.post('/', createCard);
+cardsRouter.get('/', getCards);
 
 export default cardsRouter;
