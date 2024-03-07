@@ -7,7 +7,6 @@ import {
   patchUser,
   getLoginedUser,
 } from '../controllers/users';
-import auth from '../middlewares/auth';
 import {
   userAboutValidation,
   userAvatarValidation,

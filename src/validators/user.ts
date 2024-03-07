@@ -1,5 +1,10 @@
 import { Joi } from 'celebrate';
-import { Validation, LongedStringValidation, RequiredLongedStringValidation, urlValidator } from './shared-validators';
+import {
+  Validation,
+  LongedStringValidation,
+  RequiredLongedStringValidation,
+  urlValidator,
+} from './shared-validators';
 
 export const userEmailValidation = new Validation(
   'email is required',

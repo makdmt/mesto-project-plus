@@ -7,6 +7,8 @@ import { AuthorizationError, ConflictError, NotFoundError } from '../middlewares
 
 const USER_ALREADY_EXIST_ERR_MSG = 'user is already exist';
 const LOGIN_FAILED_ERR_MSG = 'wrong email or password';
+const LOGIN_MSG = 'login success';
+const LOGOUT_MSG = 'logout success';
 export const { JWT_SECRET = 'dev-mode' } = process.env;
 
 export const getUsers = (req: Request, res: Response, next: NextFunction) => {
@@ -54,8 +56,6 @@ export const createUser = (req: Request, res: Response, next: NextFunction) => {
 export const login = (req: Request, res: Response, next: NextFunction) => {
   const { email, password } = req.body;
 
-  console.log(email)
-
   User.findOne({ email }).select('+password').orFail(new AuthorizationError(LOGIN_FAILED_ERR_MSG))
     .then((user) => bcrypt.compare(password, user.password).then((matched) => {
       if (!matched) return Promise.reject(new AuthorizationError(LOGIN_FAILED_ERR_MSG));
@@ -71,9 +71,13 @@ export const login = (req: Request, res: Response, next: NextFunction) => {
       res.cookie('jwt', token, {
         maxAge: 3600000 * 24 * 7,
         httpOnly: true,
-      }).end();
+      }).send({ message: LOGIN_MSG });
     })
     .catch(next);
+};
+
+export const logout = (req: Request, res: Response, next: NextFunction) => {
+  res.clearCookie('jwt').send({ message: LOGOUT_MSG });
 };
 
 export const getLoginedUser = (req: Request, res: Response, next: NextFunction) => {
