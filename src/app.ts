@@ -5,6 +5,7 @@ import mongoose from 'mongoose';
 import router from './routes/index';
 import errHandleMiddleware from './middlewares/errors/errors-middleware';
 import 'dotenv/config';
+import { errorLogger, requestLogger } from './middlewares/logger';
 
 const { EXPRESS_SERVER_PORT: PORT = 3000, MONGO_URL = '' } = process.env;
 
@@ -18,7 +19,9 @@ async function connect() {
 }
 
 app.use(json());
+app.use(requestLogger);
 app.use(router);
+app.use(errorLogger);
 app.use(errHandleMiddleware);
 
 connect();
