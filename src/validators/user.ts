@@ -1,5 +1,5 @@
 import { Joi } from 'celebrate';
-import { Validation, LongedStringValidation, RequiredLongedStringValidation } from './shared-validators';
+import { Validation, LongedStringValidation, RequiredLongedStringValidation, urlValidator } from './shared-validators';
 
 export const userEmailValidation = new Validation(
   'email is required',
@@ -26,7 +26,7 @@ export const userAboutValidation = new LongedStringValidation(
 
 export const userAvatarValidation = new Validation(
   'avatar must be URL',
-  Joi.string().uri({ domain: {} }),
+  Joi.string().custom(urlValidator),
 );
 
 export const userValidator = Joi.object().keys({

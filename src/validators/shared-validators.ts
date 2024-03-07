@@ -1,4 +1,5 @@
 import { Joi, celebrate } from 'celebrate';
+import validator from 'validator';
 
 export class Validation {
   public validator: (val: string | number) => boolean;
@@ -40,3 +41,10 @@ const mongoObjIdValidation = new Validation(
 export const mongoObjIdInQueryValidator = celebrate({
   params: Joi.object().keys({ id: mongoObjIdValidation.schemaJoi }),
 });
+
+export const urlValidator = (value: string) => {
+  if (!validator.isURL(value, { require_protocol: true })) {
+    throw new Error('wrong url format');
+  }
+  return value;
+};

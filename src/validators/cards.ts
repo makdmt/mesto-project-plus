@@ -1,5 +1,5 @@
 import { Joi } from 'celebrate';
-import { Validation, RequiredLongedStringValidation } from './shared-validators';
+import { Validation, RequiredLongedStringValidation, urlValidator } from './shared-validators';
 
 export const cardNameValidation = new RequiredLongedStringValidation(
   2,
@@ -9,7 +9,7 @@ export const cardNameValidation = new RequiredLongedStringValidation(
 
 export const cardLinkValidation = new Validation(
   'link is required and must be URL',
-  Joi.string().required().uri({ domain: {} }),
+  Joi.string().required().custom(urlValidator),
 );
 
 export const cardValidator = Joi.object().keys({
