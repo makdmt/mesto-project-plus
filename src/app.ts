@@ -7,7 +7,7 @@ import errHandleMiddleware from './middlewares/errors/errors-middleware';
 import 'dotenv/config';
 import { errorLogger, requestLogger } from './middlewares/logger';
 
-const { EXPRESS_SERVER_PORT: PORT = 3000, MONGO_URL = '' } = process.env;
+const { EXPRESS_SERVER_PORT: PORT = 3000, MONGO_URL = 'mongodb://localhost:27017/mestodb' } = process.env;
 
 const app = express();
 
