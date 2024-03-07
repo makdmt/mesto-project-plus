@@ -1,4 +1,5 @@
 import express, { json } from 'express';
+import cookieParser from 'cookie-parser';
 import { errors as celebraleErrorHandler } from 'celebrate';
 import mongoose from 'mongoose';
 import router from './routes/index';
@@ -18,6 +19,7 @@ async function connect() {
 }
 
 app.use(json());
+app.use(cookieParser());
 app.use(requestLogger);
 app.use(router);
 app.use(errorLogger);
