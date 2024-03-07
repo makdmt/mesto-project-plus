@@ -1,6 +1,5 @@
-import express, {
-  NextFunction, Request, Response, json,
-} from 'express';
+import express, { json } from 'express';
+import { errors as celebraleErrorHandler } from 'celebrate';
 import mongoose from 'mongoose';
 import router from './routes/index';
 import errHandleMiddleware from './middlewares/errors/errors-middleware';
@@ -22,6 +21,7 @@ app.use(json());
 app.use(requestLogger);
 app.use(router);
 app.use(errorLogger);
+app.use(celebraleErrorHandler());
 app.use(errHandleMiddleware);
 
 connect();

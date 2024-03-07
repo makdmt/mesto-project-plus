@@ -1,38 +1,5 @@
 import { Joi } from 'celebrate';
-
-export class Validation {
-  public validator: (val: string | number) => boolean;
-
-  constructor(
-    public errMessage: string,
-    public schemaJoi: Joi.Schema,
-  ) {
-    this.validator = (val) => !Joi.isError(schemaJoi.validate(val).error);
-  }
-}
-
-export class RequiredLongedStringValidation extends Validation {
-  public required: true;
-
-  constructor(
-    public minLength: number,
-    public maxLength: number,
-    public errMessage: string,
-  ) {
-    super(errMessage, Joi.string().required().min(minLength).max(maxLength));
-    this.required = true;
-  }
-}
-
-export class LongedStringValidation extends Validation {
-  constructor(
-    public minLength: number,
-    public maxLength: number,
-    public errMessage: string,
-  ) {
-    super(errMessage, Joi.string().min(minLength).max(maxLength));
-  }
-}
+import { Validation, LongedStringValidation, RequiredLongedStringValidation } from './shared-validators';
 
 export const userEmailValidation = new Validation(
   'email is required',
@@ -59,10 +26,12 @@ export const userAboutValidation = new LongedStringValidation(
 
 export const userAvatarValidation = new Validation(
   'avatar must be URL',
-  Joi.string().uri(),
+  Joi.string().uri({ domain: {} }),
 );
 
-export const userValidator = Joi.object({
+export const userValidator = Joi.object().keys({
+  email: userEmailValidation.schemaJoi,
+  password: userPasswordValidation.schemaJoi,
   name: userNameValidation.schemaJoi,
   about: userAboutValidation.schemaJoi,
   avatar: userAvatarValidation.schemaJoi,

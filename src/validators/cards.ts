@@ -1,7 +1,7 @@
 import { Joi } from 'celebrate';
-import { Validation, LongedStringValidation } from './user';
+import { Validation, RequiredLongedStringValidation } from './shared-validators';
 
-export const cardNameValidation = new LongedStringValidation(
+export const cardNameValidation = new RequiredLongedStringValidation(
   2,
   30,
   'name is required and must be string from 2 to 30 long',
@@ -9,5 +9,10 @@ export const cardNameValidation = new LongedStringValidation(
 
 export const cardLinkValidation = new Validation(
   'link is required and must be URL',
-  Joi.string().required().uri(),
+  Joi.string().required().uri({ domain: {} }),
 );
+
+export const cardValidator = Joi.object().keys({
+  name: cardNameValidation.schemaJoi,
+  link: cardLinkValidation.schemaJoi,
+});

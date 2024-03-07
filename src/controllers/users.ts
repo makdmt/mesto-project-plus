@@ -17,7 +17,7 @@ export const getUsers = (req: Request, res: Response, next: NextFunction) => {
 
 export const getUserById = (req: Request, res: Response, next: NextFunction) => {
   const { id } = req.params;
-  return User.find({ _id: id }).orFail(new NotFoundError())
+  return User.findOne({ _id: id }).orFail(new NotFoundError())
     .then((user) => res.send(user))
     .catch(next);
 };
