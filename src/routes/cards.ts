@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import { mongoObjIdInQueryValidator } from '../validators/shared-validators';
 import getCards, {
   createCard,
   deleteCard,
@@ -10,8 +11,8 @@ const cardsRouter = Router();
 
 cardsRouter.get('/', getCards);
 cardsRouter.post('/', createCard);
-cardsRouter.delete('/:cardId', deleteCard);
-cardsRouter.put('/:cardId/likes', likeCard);
-cardsRouter.delete('/:cardId/likes', dislikeCard);
+cardsRouter.delete('/:id', mongoObjIdInQueryValidator, deleteCard);
+cardsRouter.put('/:id/likes', mongoObjIdInQueryValidator, likeCard);
+cardsRouter.delete('/:id/likes', mongoObjIdInQueryValidator, dislikeCard);
 
 export default cardsRouter;

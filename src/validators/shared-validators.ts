@@ -1,4 +1,4 @@
-import { Joi } from 'celebrate';
+import { Joi, celebrate } from 'celebrate';
 
 export class Validation {
   public validator: (val: string | number) => boolean;
@@ -32,7 +32,11 @@ export class LongedStringValidation extends Validation {
   }
 }
 
-export const mongoObjIdValidation = new Validation(
+const mongoObjIdValidation = new Validation(
   '_id is required and must be string 20 long',
   Joi.string().required().alphanum().length(24),
 );
+
+export const mongoObjIdInQueryValidator = celebrate({
+  params: Joi.object().keys({ id: mongoObjIdValidation.schemaJoi }),
+});

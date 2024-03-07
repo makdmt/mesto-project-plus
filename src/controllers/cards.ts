@@ -17,9 +17,9 @@ export const createCard = (req: Request, res: Response, next: NextFunction) => {
 };
 
 export const deleteCard = (req: Request, res: Response, next: NextFunction) => {
-  const { cardId } = req.params;
+  const { id: cardId } = req.params;
   const { _id: userId } = req.user;
-  return Cards.findById({ _id: cardId }).orFail(new NotFoundError())
+  return Cards.findById(cardId).orFail(new NotFoundError())
     .then((card) => {
       if (String(card.owner) !== userId) return Promise.reject(new ForbiddenError());
       return card.deleteOne()
@@ -29,18 +29,18 @@ export const deleteCard = (req: Request, res: Response, next: NextFunction) => {
 };
 
 export const likeCard = (req: Request, res: Response, next: NextFunction) => {
-  const { cardId } = req.params;
+  const { id: cardId } = req.params;
   const { _id: userId } = req.user;
-  return Cards.findByIdAndUpdate({ _id: cardId }, { $addToSet: { likes: userId } }, { new: true })
+  return Cards.findByIdAndUpdate(cardId, { $addToSet: { likes: userId } }, { new: true })
     .then((card) => res.send(card))
     .catch(next);
 };
 
 export const dislikeCard = (req: Request, res: Response, next: NextFunction) => {
-  const { cardId } = req.params;
+  const { id: cardId } = req.params;
   const { _id: userId } = req.user;
   return Cards.findByIdAndUpdate(
-    { _id: cardId },
+    cardId,
     { $pull: { likes: userId } },
     { new: true },
   ).orFail(new NotFoundError())

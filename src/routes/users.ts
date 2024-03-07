@@ -10,8 +10,13 @@ import {
   getLoginedUser,
 } from '../controllers/users';
 import auth from '../middlewares/auth';
-import { userAboutValidation, userAvatarValidation, userNameValidation, userValidator } from '../validators/user';
-import { mongoObjIdValidation } from '../validators/shared-validators';
+import {
+  userAboutValidation,
+  userAvatarValidation,
+  userNameValidation,
+  userValidator,
+} from '../validators/user';
+import { mongoObjIdInQueryValidator } from '../validators/shared-validators';
 
 const userRouter = Router();
 userRouter.post('/signup', celebrate({ body: userValidator }), createUser);
@@ -25,7 +30,7 @@ userRouter.patch('/me', celebrate({
   }),
 }), patchUser);
 userRouter.get('/me', getLoginedUser);
-userRouter.get('/:id', celebrate({ params: Joi.object().keys({ id: mongoObjIdValidation.schemaJoi }) }), getUserById);
+userRouter.get('/:id', mongoObjIdInQueryValidator, getUserById);
 userRouter.get('/', getUsers);
 
 export default userRouter;
